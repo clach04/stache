@@ -7,7 +7,7 @@ Trimmed mustache logic-less templates
 Fork of https://github.com/hyperturtle/Stache with:
 
   * support for Cpython 2.2 up to and including Python 3.x
-  * Also works with Jython 2.x.
+  * Also works with Jython 2.x (where string.format() is not available).
   * Fix for trailing blank newlines (https://github.com/hyperturtle/Stache/issues/2)
   * regular Python unittest based test suite
 
