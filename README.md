@@ -13,7 +13,7 @@ Fork of https://github.com/hyperturtle/Stache with:
 
 Also see https://github.com/SmithSamuelM/staching which includes a fix for https://github.com/hyperturtle/Stache/issues/2 but doesn't support older Python versions, use if older Python support is not required.
 
-Implements everything from [Mustache.5](http://mustache.github.com/mustache.5.html)
+Implements everything from [Mustache.5](https://mustache.github.io/mustache.5.html)
 **except for lambdas** in < 200 lines of code. Plus four new things. Implied closing tags
 `{{/}}`, Self referencer `{{.}}`, Existence check `{{?exists}}{{/exists}}` and data pusher 
 `{{< blah}}{{/blah}}`, `{{:default}}`
