@@ -18,6 +18,35 @@ Implements everything from [Mustache.5](https://mustache.github.io/mustache.5.ht
 `{{/}}`, Self referencer `{{.}}`, Existence check `{{?exists}}{{/exists}}` and data pusher 
 `{{< blah}}{{/blah}}`, `{{:default}}`
 
+
+- [Fork notes](#fork-notes)
+- [Also, the ability to compile to javascript code!](#also-the-ability-to-compile-to-javascript-code)
+  - [render_js(template_string)](#render_jstemplate_string)
+  - [Stache().render_js_template(template_name)](#stacherender_js_templatetemplate_name)
+  - [render_all_js()](#render_all_js)
+- [Why?](#why)
+- [Existing Stuff](#existing-stuff)
+  - [{{tag}}](#tag)
+  - [{{{unescape}}} & {{&unescape}}](#unescape--unescape)
+  - [{{#section}}{{/section}}](#sectionsection)
+  - [{{^invert}}{{/invert}}](#invertinvert)
+  - [{{! comments - ignore me }}](#-comments---ignore-me-)
+  - [{{>partial}}](#partial)
+- [New Stuff](#new-stuff)
+  - [{{/}} Implied closing tag](#-implied-closing-tag)
+  - [{{.}} Self Referencer](#-self-referencer)
+  - [Existence Check {{?exists}}{{/}}](#existence-check-exists)
+  - [{{:default}}stuff{{/}}](#defaultstuff)
+  - [{{<thing}} Pusher {{/thing}}](#thing-pusher-thing)
+- [Install](#install)
+- [Test](#test)
+- [Benchmark](#benchmark)
+- [Usage:](#usage)
+  - [To populate partials:](#to-populate-partials)
+  - [Efficient use with async wsgi:](#efficient-use-with-async-wsgi)
+- [Timeline:](#timeline)
+
+
 ## Fork notes
 
   * Original upstream version is https://github.com/hyperturtle/Stache - see branch https://github.com/clach04/stache/tree/hyperturtle_upstream - (as of 2023) no updates since 2012 and outstanding pull requests
