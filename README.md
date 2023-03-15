@@ -18,24 +18,24 @@ Implements everything from [Mustache.5](https://mustache.github.io/mustache.5.ht
 `{{/}}`, Self referencer `{{.}}`, Existence check `{{?exists}}{{/exists}}` and data pusher 
 `{{< blah}}{{/blah}}`, `{{:default}}`
 
-# Fork notes
+## Fork notes
 
   * Original upstream version is https://github.com/hyperturtle/Stache - see branch https://github.com/clach04/stache/tree/hyperturtle_upstream - (as of 2023) no updates since 2012 and outstanding pull requests
   * this repo, [main branch](https://github.com/clach04/stache/tree/main) is a continuation of https://github.com/clach04/Stache_fork
   * branch [jython22_support](https://github.com/clach04/stache/tree/jython22_support) supports older code base.
   
 
-# Also, the ability to compile to javascript code!
+## Also, the ability to compile to javascript code!
 
-## render_js(template_string)
+### render_js(template_string)
 
 Compiles an inline script to javascript code
 
-## Stache().render_js_template(template_name)
+### Stache().render_js_template(template_name)
 
 Compiles all the templates and sets the entry point to the template name
 
-## render_all_js()
+### render_all_js()
 
 Compiles all the templates and returns a template object.
 
@@ -50,7 +50,7 @@ var content = t['template_name']([{myparams:3}])
 $("#container").html(content)
 ```
 
-# Why?
+## Why?
 
 Because the current [Pystache](https://github.com/defunkt/pystache) implementation
 has holes. And because I wanted to learn about python generators. As a result
@@ -59,17 +59,17 @@ of two main methods, `_tokenize`, and `_parse`, both python generators. `_tokeni
 tokens and `_parse` consumes and renders them. Also benchmarking the two with my tests,
 mine was slightly faster, around 2x to 3x.
 
-# Existing Stuff
+## Existing Stuff
 
-## {{tag}}
+### {{tag}}
 
 Renders the value of tag, html escaped, within the current scope
 
-## {{{unescape}}} & {{&unescape}}
+### {{{unescape}}} & {{&unescape}}
 
 Don't html escape the value
 
-## {{#section}}{{/section}}
+### {{#section}}{{/section}}
 
 Section blocks. Renders the enclosed block if
 
@@ -82,22 +82,22 @@ If `section` exists and is a(n):
 current element in scope
 - Dict: It renders the enclosed block once and places the Dict as the current scope
 
-## {{^invert}}{{/invert}}
+### {{^invert}}{{/invert}}
 
 Renders the enclosed block if `invert` is an empty string, empty array, false,
 or doesn't exist. The opposite the the section block.
 
-## {{! comments - ignore me }}
+### {{! comments - ignore me }}
 
 Ignores the text within the tag
 
-## {{>partial}}
+### {{>partial}}
 
 Looks up the `partial` template and renders it with the current context
 
-# New Stuff
+## New Stuff
 
-## {{/}} Implied closing tag
+### {{/}} Implied closing tag
 
 Whenever you use {{/}} it implies the closing of the nearest block.
 
@@ -107,7 +107,7 @@ Is the same as:
 
     {{#open}}stuff goes here{{/open}}
 
-## {{.}} Self Referencer
+### {{.}} Self Referencer
 
 This renders the current "scope". This is useful if you want to iterate over an array
 and wrap them.
@@ -123,7 +123,7 @@ with `array = [1,2,3,'yay']` will produce:
 <li>yay</li>
 ````
 
-## Existence Check {{?exists}}{{/}}
+### Existence Check {{?exists}}{{/}}
 
 Forces a check of the tag name, rather than imply that it is a section block. This
 is useful for check if an array has members rather than iterate over the members
@@ -149,13 +149,13 @@ which would render
     stuff
     stuff
 
-## {{:default}}stuff{{/}}
+### {{:default}}stuff{{/}}
 
 This is equivalent to `{{default}}{{^default}}stuff{{/}}`
 
 It renders the enclosed section if default doesn't exist, empty or false
 
-## {{<thing}} Pusher {{/thing}}
+### {{<thing}} Pusher {{/thing}}
 
 It renders the inner block and adds it to the global scope.
 
@@ -232,7 +232,7 @@ Custom Footer
 </div>
 ```
 
-# Install
+## Install
 
     pip install stache
 
@@ -240,7 +240,7 @@ Optionally install Nose for running nosetests, there is a regular unittest that 
 
     pip install nose
 
-# Test
+## Test
 
 Pure python tests can be ran with:
 
@@ -251,11 +251,11 @@ The Python and javascript tests can be ran with `python test.py` or if you have 
     cd stache
     nosetests
 
-# Benchmark
+## Benchmark
 
     python test.py
 
-# Usage:
+## Usage:
 
     >>> from Stache import Stache
     >>> Stache().render("Hello {{who}}!", dict(who="World"))
@@ -267,7 +267,7 @@ or
     >>> Stache.render("Hello {{world}}!", dict(world="Stache!"))
     Hello Stache!
 
-## To populate partials:
+### To populate partials:
 
     >>> from Stache import Stache
     >>> stachio = Stache()
@@ -286,7 +286,7 @@ template.
 
 I don't think this is ideal though... Ideas for populating partials are welcome.
 
-## Efficient use with async wsgi:
+### Efficient use with async wsgi:
 
 For wsgi apps that support async, you can yield parts of the rendered template as
 they render. `render_iter` and `render_template_iter` both produce iterators that
@@ -297,7 +297,7 @@ are yield'ed as it is generated.
     Hello
     Stache!
 
-# Timeline:
+## Timeline:
 
 I'm wary of lambdas, because I want the templates to be language agnostic.
 The main reason I liked Mustache in the first place is because of possibility of
