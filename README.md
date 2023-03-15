@@ -4,7 +4,7 @@
 
 Trimmed mustache logic-less templates
 
-Fork of https://github.com/hyperturtle/Stache with:
+Hard-Fork of https://github.com/hyperturtle/Stache with:
 
   * support for Cpython 2.2 up to and including Python 3.x
   * Also works with Jython 2.x (where string.format() is not available).
@@ -18,6 +18,12 @@ Implements everything from [Mustache.5](https://mustache.github.io/mustache.5.ht
 `{{/}}`, Self referencer `{{.}}`, Existence check `{{?exists}}{{/exists}}` and data pusher 
 `{{< blah}}{{/blah}}`, `{{:default}}`
 
+# Fork notes
+
+  * Original upstream version is https://github.com/hyperturtle/Stache - see branch https://github.com/clach04/stache/tree/hyperturtle_upstream - (as of 2023) no updates since 2012 and outstanding pull requests
+  * this repo, [main branch](https://github.com/clach04/stache/tree/main) is a continuation of https://github.com/clach04/Stache_fork
+  * branch [jython22_support](https://github.com/clach04/stache/tree/jython22_support) supports older code base.
+  
 
 # Also, the ability to compile to javascript code!
 
