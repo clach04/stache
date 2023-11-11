@@ -154,6 +154,8 @@ with `array = [1,2,3,'yay']` will produce:
 
 ### Existence Check {{?exists}}{{/}}
 
+See https://github.com/mustache/spec/discussions/157
+
 Forces a check of the tag name, rather than imply that it is a section block. This
 is useful for check if an array has members rather than iterate over the members
 
