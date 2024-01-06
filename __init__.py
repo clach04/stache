@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# -*- coding: ascii -*-
+# vim:ts=4:sw=4:softtabstop=4:smarttab:expandtab
+#
+
 from __future__ import generators
 import sys
 try:
@@ -524,4 +529,89 @@ class Stache(object):
             elif tag == TOKEN_TAGDELIM:
                 self.otag, self.ctag = content
 
+def main(argv=None):
+    if argv is None:
+        argv = sys.argv
 
+    # TODO bother with argument processing
+    json_filename = argv[1]  # could also use yaml (but json available, even for old CPython/Jython), YAML would useful for standards compliance tests for Mustache (https://github.com/mustache/spec/tree/master/specs)
+    template_filename = argv[2]  # if missing json_filename (sans .json) + '.html'?
+    # default to stdout
+    # default to current locale (what ever that means...) encoding, e.g. osenv set PYTHONUTF8=1
+
+    import pprint
+    import warnings
+
+    try:
+        # Jython 2.5+
+        from com.xhaus.jyson import JysonCodec as jyson  # http://opensource.xhaus.com/projects/jyson
+        # NOTE jyson 1.0.2 works with Jython 2.7.0
+        # NOTE jyson 1.0.2 works with Jython 2.5.1 BUT fails on Boolean values
+        # NOTE jyson 1.0.1 works fine with jython 2.5.1 BUT does not support escaped Unicode characters
+    except ImportError:
+        jyson = None
+
+    try:
+        # Python 2.6+
+        import json
+    except ImportError:
+        try:
+            # from http://code.google.com/p/simplejson
+            import simplejson as json
+        except ImportError:
+            json = jyson
+
+    if jyson:
+        load_json = jyson.loads
+    elif json:
+        load_json = json.loads
+    else:
+        warnings.warn('No json suport found, naive json handler can be enabled via STACHE_RUN_UNTRUSTED_CODE which will run (python) code in your process space rather than parse json content')
+        if os.environ.get(STACHE_RUN_UNTRUSTED_CODE) is None:
+            raise NotImplementedError()
+        _safe_repr_original = pprint._safe_repr
+        def hackbool__safe_repr(object, context, maxlevels, level):
+            """Monkeypatch for pprint._safe_repr() - Return lowercase for boolean True/False to match JSON"""
+            if object is True:
+                return ('true', True, False)  # lower case, to match json
+            elif object is False:
+                return ('false', True, False)  # lower case, to match json
+            else:
+                return _safe_repr_original(object, context, maxlevels, level)
+
+        def load_json(x):
+            """dumb not safe! Executes code, should not be used in production with unvalidated input json!
+            Works for the purposes of this specific script"""
+            x = x.replace('\r', '')
+            try:
+                # Dumb literals for json/javascript/ecmascript emulation
+                true = True
+                null = None
+                false = False
+                result = eval(x)
+            except Exception:
+                logging.error('parsing json string data: %r', x)
+                print('')
+                print('** ERROR parsing json string data')
+                print('')
+                raise
+            return result
+
+
+
+    f = open(json_filename, 'rb')
+    json_data_bytes = f.read()
+    f.close()
+    config = load_json(json_data_bytes)
+
+    f = open(template_filename)  # , 'rb')
+    template_str = f.read()
+    f.close()
+
+    result = Stache().render(template_str, config)
+    print('%s' % result)
+
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main())

@@ -10,6 +10,7 @@ Hard-Fork of https://github.com/hyperturtle/Stache with:
   * Also works with Jython 2.x (where string.format() is not available).
   * Fix for trailing blank newlines (https://github.com/hyperturtle/Stache/issues/2)
   * regular Python unittest based test suite
+  * very limited main() function for use as a tool to apply json to a template on the command line
 
 Also see https://github.com/SmithSamuelM/staching which includes a fix for https://github.com/hyperturtle/Stache/issues/2 but doesn't support older Python versions, use if older Python support is not required.
 
