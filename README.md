@@ -4,7 +4,7 @@
 
 Trimmed mustache logic-less templates
 
-Hard-Fork of https://github.com/hyperturtle/Stache with:
+Detached Hard-Fork of https://github.com/hyperturtle/Stache with:
 
   * support for Cpython 2.2 up to and including Python 3.x
   * Also works with Jython 2.x (where string.format() is not available).
